@@ -16,3 +16,8 @@
 ### Execucao real (mesmo extrato `sudeste-260929`, timestamp OSM 2026-09-29T20:22:51Z, 859.700.004 bytes)
 - `build.py --rm 04701`: 65.105 ways, 591.498 nos, 123.995 arcos no bbox, 113.644 no poligono, 83.547 nos gravados, 625 problemas; GPKG 41.062.400 B (identico ao da medicao), zip -9 17.058.825 B; subprocesso 21,2 s, pico 995 MB; log com `OSM: cache reutilizado`.
 - `build.py --municipio 3205309`: 25.261 ways, 124.692 nos, 48.375 arcos no bbox, 22.040 no poligono, 17.064 nos, 218 problemas; GPKG 7.852.032 B; pico 435 MB. Iguais ao caminho B da medicao (o extrato e o mesmo). A comparacao com o Overpass (Passo 8) nao foi refeita aqui.
+
+### Passo 8 — portão contra o Overpass (2026-09-30, Vitória 3205309, mesmo bbox e polígono do build)
+- Overpass passou na 1ª tentativa (6,8 s em `compute_osm_network`). Geofabrik = extrato `sudeste-260929`, Overpass = OSM ao vivo em 2026-09-30.
+- Ways 25.261 (Geofabrik) × 25.266 (Overpass), −0,02%. Arcos no bbox 48.375 × 48.387, −0,02%. Arcos no polígono 22.040 × 22.050, −0,05%. Problemas 218 × 218, distribuição idêntica (ilha 14, mão única sem saída 12, ponta quase conectada 192).
+- Critério (< 2% em ways, arcos e problemas): **aprovado**. A diferença é a data do OSM, como no M1.
