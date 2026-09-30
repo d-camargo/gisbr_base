@@ -1,4 +1,41 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.1.0] — 2026-09-30
+- Primeira Release de dados: `osm-20260929` (84 RMs, rede veicular, extratos Geofabrik de 2026-09-29).
+
+### Detalhes
 - Estrutura inicial do repo, regras (GEMINI.md), plano da rodada 1 (PLAN.md) e medição de origem (medicao/2026-09-30/).
+- Passos 2 a 7 do PLAN.md: `gisbr_base/{config,catalogo,geofabrik,malhas,recorte,converte,processa_rm}.py`, `build.py` e `tests/` (9 testes, sem precisar de rede). `GISBR_REF` = b82ab1bab2d8cf67d308ccdc599ef31910662866.
+- Geofabrik: o nome datado sai da pagina `<regiao>.html` (indice de arquivos, so vale o que tem `.md5`); `latest` nunca e usado. Filtro `w/highway` do Sudeste: 8,6 s na maquina local (85 s no container de 3 GB da medicao).
+- `build.py --municipio` e so validacao: gera gpkg + metrics, nao entra em `rms` do manifest. `manifest.json` faz merge entre execucoes; se o `gisbr_ref` ou o `schema_version` mudar, as entradas antigas sao descartadas.
+
+### Medicao do Passo 4 (2026-09-30, Pop!_OS, 16 GB, Sudeste `sudeste-260929.osm.pbf`, filtrado w/highway)
+- `osmium extract --config` (complete_ways, as 15 RMs do Sudeste, osmium 1.16.0) sob `systemd-run --user --scope -p MemoryMax=12G -p MemorySwapMax=0`: **morto por SIGKILL em 5,9 s, pico RSS 12,56 GB** (bateu no teto). Nao cabe, nao usado.
+- `osmium extract -b` com UM bbox, mesma maquina: 04701 2,84 s / 3,62 GB; 04901 4,12 s / 3,81 GB; 04501 2,71 s / 3,75 GB. O recorte de 04701 tem os mesmos 65.105 ways e 591.498 nos do pyextract (conjuntos de ids iguais). O OOM da medicao original (teto de 3 GB) era esse pico de ~3,6 GB. Fica registrado como alternativa: um `osmium extract` por RM, em sequencia, seria mais rapido que o pyosmium (~3 s contra 252 s para as 15 RMs). Nao foi adotado nesta rodada (o plano manda pyosmium multi-bbox).
+- `pyextract.py` original, 04701: 140,4 s (nos 55,3 + ways 29,8 + escrita 55,3), pico 255 MB.
+- `recorte.py` multi-bbox, **15 RMs do Sudeste numa leitura**: 252,1 s (nos 73,1 + ways 65,0 + escrita 114,0), pico 2.833 MB. Sao 16,8 s por RM contra 140 s por RM em recortes isolados. BH 163.259 ways / 1.475.702 nos e SP 435.304 / 2.809.071 batem com a medicao de 2026-09-30.
+- Criterio do Passo 4: 04701 pelo caminho multi-bbox x `pyextract.py` no mesmo extrato: conjuntos de ids de nos (591.498) e de ways (65.105) **identicos**.
+
+### Execucao real (mesmo extrato `sudeste-260929`, timestamp OSM 2026-09-29T20:22:51Z, 859.700.004 bytes)
+- `build.py --rm 04701`: 65.105 ways, 591.498 nos, 123.995 arcos no bbox, 113.644 no poligono, 83.547 nos gravados, 625 problemas; GPKG 41.062.400 B (identico ao da medicao), zip -9 17.058.825 B; subprocesso 21,2 s, pico 995 MB; log com `OSM: cache reutilizado`.
+- `build.py --municipio 3205309`: 25.261 ways, 124.692 nos, 48.375 arcos no bbox, 22.040 no poligono, 17.064 nos, 218 problemas; GPKG 7.852.032 B; pico 435 MB. Iguais ao caminho B da medicao (o extrato e o mesmo). A comparacao com o Overpass (Passo 8) nao foi refeita aqui.
+
+### Passo 8 — portão contra o Overpass (2026-09-30, Vitória 3205309, mesmo bbox e polígono do build)
+- Overpass passou na 1ª tentativa (6,8 s em `compute_osm_network`). Geofabrik = extrato `sudeste-260929`, Overpass = OSM ao vivo em 2026-09-30.
+- Ways 25.261 (Geofabrik) × 25.266 (Overpass), −0,02%. Arcos no bbox 48.375 × 48.387, −0,02%. Arcos no polígono 22.040 × 22.050, −0,05%. Problemas 218 × 218, distribuição idêntica (ilha 14, mão única sem saída 12, ponta quase conectada 192).
+- Critério (< 2% em ways, arcos e problemas): **aprovado**. A diferença é a data do OSM, como no M1.
+
+### Passo 9 — portão de memória, RM São Paulo 04901 (2026-09-30, extrato `sudeste-260929`, MemoryMax=12G)
+- **Passou.** Pico de RAM do subprocesso 4.874 MB (estimativa do M3 era 6–7,5 GB). `build.py` inteiro: 5 min 20 s de parede, pico 4.992 MB (maior filho).
+- Recorte (1 bbox, pyosmium) 142,3 s / 981 MB; conversão 22,2 s; subprocesso 126,8 s: `compute_osm_network` 62,7 s (topologia 9,0, filtro 3,8, verificação 45,9), `montar_camadas` 51,4 s, gravação 9,6 s.
+- 435.304 ways, 2.809.071 nós no JSON, 872.182 arcos no bbox, 710.876 no polígono, 524.730 nós, 3.747 problemas (cruzamento_sem_no 7, ilha 142, mão única sem saída 376, ponta quase conectada 3.222).
+- GPKG 253.648.896 B, zip -9 104.825.145 B.
+- Pendente: conferir a borda no QGIS com o plugin em modo RM (D4), feito à mão.
+
+### Passo 10 (parte local) — lote completo (2026-09-30, extratos `*-260929`, todos com timestamp OSM 2026-09-29T20:22:51Z)
+- `build.py --pular-existentes`: ~51 min de parede (17:27–18:18), 82 RMs. Recortes: norte 10 bboxes 39,5 s; nordeste 33 bboxes 261,5 s / 2.221 MB; centro-oeste 3 bboxes 32,7 s; sudeste 13 bboxes 229,5 s / 3.199 MB; sul 23 bboxes 166,2 s / 3.476 MB.
+- **84 de 84 RMs `ok`** depois da correção abaixo. Zips somam 1.087,9 MB (estimativa do M6: 1,4–3,4 GB); o maior é SP, 104,8 MB. Soma do tempo dos subprocessos das 81 RMs do 1º lote: 1.566 s.
+- **Correção 1 — malha IBGE inválida:** 3 RMs falharam (01501 Cariri, 04402 Área de Expansão Metropolitana/BA, 03001 Recife) porque um município de cada (2301901, 2926301, 2607208) vem com polígono inválido, o `unaryUnion` devolvia nulo e o bbox saía infinito. `malhas.py` agora aplica `makeValid()` em cada município e aborta se a união sair vazia. Refeitas: Cariri 44.718 arcos / 624 MB, Área de Expansão 18.578 / 734 MB, Recife 166.849 / 1.294 MB.
+- **Correção 2 — `maxrss_mb` errado:** `ru_maxrss` herda o pico do processo pai no fork/exec, e o `build.py` segura ~3,5 GB depois do recorte. As RMs cujo pico real ficou abaixo do pai registraram o pico do pai. `processa_rm.py` agora lê `VmHWM` de `/proc/self/status`, que zera no exec. No manifest deste lote, os 78 valores contaminados viraram `null`; só 04701, 04901, 00201, 01501, 04402 e 03001 têm pico medido.
