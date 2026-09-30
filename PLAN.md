@@ -109,6 +109,32 @@ Achados que moldam este plano:
   Registrado no manifest.
 - **D10. Periodicidade:** manual, mensal ou quando o gisbr trocar de ref. Guardar as 3
   últimas Releases e apagar as mais antigas à mão.
+- **D11. Formato do contrato: GPKG zipado, não GeoParquet** (decisão do Diego, 2026-09-30).
+  O QGIS do Pop!_OS, do Ubuntu e do Flatpak **não traz o driver GDAL de Parquet**. É o
+  mesmo motivo pelo qual as fontes geobr v2 do gisbr dependem do `pyarrow` e são
+  puladas sem ele (ver `gisbr/core/capabilities.py`). Se o contrato fosse só
+  GeoParquet, `osm_vias` falharia para esses usuários, e a máquina do Diego é um deles.
+  O GPKG abre em qualquer QGIS e segue o princípio do gisbr de usar só o que vem com o
+  QGIS. As vantagens do GeoParquet pesam pouco aqui: o ganho de tamanho é pequeno (BH =
+  40,5 MB zipado em GPKG), a leitura parcial por bbox não se aplica porque o plugin
+  baixa a RM inteira, e cada RM viraria 3 arquivos, porque o Parquet guarda uma tabela
+  por arquivo.
+  **Extra futuro, fora desta rodada:** se aparecer demanda de análise fora do QGIS
+  (DuckDB, pandas), publicar GeoParquet **ao lado**, como asset adicional, de
+  preferência **uma camada nacional única** com bbox por feição (GeoParquet 1.1), em
+  que a leitura parcial remota passa a fazer sentido. Isso não muda o
+  `schema_version` do contrato do plugin.
+- **D12. Armazenamento: GitHub Releases** (decisão do Diego, 2026-09-30). Custo zero,
+  nada novo para manter, limite de 2 GB por asset (o maior, SP, fica bem abaixo) e URL
+  estável `/releases/latest/download/<asset>`. Porte: 1,4–3,4 GB por build (M6,
+  estimativa) × 3 Releases guardadas (D10) = até ~10 GB.
+  **Não** na VPS: 23 GB livres, e o tráfego de download dividiria banda com o Hermes.
+  **Alternativas registradas, para quando houver motivo:**
+  - **Zenodo**, se a base for **citada em artigo** (sci-team): DOI por versão e até
+    50 GB por registro. Arquiva-se uma Release específica, sem trocar o
+    armazenamento do plugin.
+  - **Cloudflare R2**, só se o GitHub limitar o tráfego ou se o GeoParquet nacional com
+    leitura parcial virar realidade (10 GB grátis, sem custo de saída).
 
 ## Estrutura do repo (criada na rodada 0)
 
