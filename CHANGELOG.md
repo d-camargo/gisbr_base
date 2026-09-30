@@ -1,6 +1,11 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.1.0] — 2026-09-30
+- Primeira Release de dados: `osm-20260929` (84 RMs, rede veicular, extratos Geofabrik de 2026-09-29).
+
+### Detalhes
 - Estrutura inicial do repo, regras (GEMINI.md), plano da rodada 1 (PLAN.md) e medição de origem (medicao/2026-09-30/).
 - Passos 2 a 7 do PLAN.md: `gisbr_base/{config,catalogo,geofabrik,malhas,recorte,converte,processa_rm}.py`, `build.py` e `tests/` (9 testes, sem precisar de rede). `GISBR_REF` = b82ab1bab2d8cf67d308ccdc599ef31910662866.
 - Geofabrik: o nome datado sai da pagina `<regiao>.html` (indice de arquivos, so vale o que tem `.md5`); `latest` nunca e usado. Filtro `w/highway` do Sudeste: 8,6 s na maquina local (85 s no container de 3 GB da medicao).

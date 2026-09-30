@@ -4,7 +4,8 @@ Base pré-processada de dados para o plugin QGIS [gisbr](https://github.com/d-ca
 
 ## Estado
 
-Rodada 1 em andamento — ver PLAN.md. Ainda não há Release publicada.
+v0.1.0: Release de dados `osm-20260929` com as 84 RMs (rede veicular). Contrato: `manifest.json` (schema 1).
+URL estável: `https://github.com/d-camargo/gisbr_base/releases/latest/download/<asset>`.
 
 ## Licenças
 
