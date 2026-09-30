@@ -1,0 +1,121 @@
+{
+ "path": "B",
+ "rm": "04501",
+ "bbox": [
+  -44.6589,
+  -20.4867,
+  -43.478,
+  -19.0593
+ ],
+ "cache_reutilizado": true,
+ "cache_preexistia": true,
+ "t_compute_total_s": 56.11,
+ "t_ate_payload_s": 4.34,
+ "t_topologia_s": 9.93,
+ "t_filtro_s": 2.79,
+ "t_verificacao_s": 38.9,
+ "erro": null,
+ "metadata": {
+  "code_muni": "rm04501",
+  "nome_muni": "rm04501",
+  "rede": "veicular",
+  "arcos": 337146,
+  "orfaos": 0,
+  "descartados": {
+   "construction": 666,
+   "busway": 122,
+   "service": 94,
+   "pedestrian": 29,
+   "residential": 6,
+   "services": 34,
+   "footway": 8,
+   "raceway": 28,
+   "tertiary_link": 1,
+   "unclassified": 1,
+   "proposed": 124,
+   "cycleway": 24,
+   "path": 5,
+   "steps": 2,
+   "dummy": 1,
+   "platform": 4,
+   "rest_area": 3,
+   "primary_link": 1,
+   "crossing": 1,
+   "corridor": 17,
+   "escape": 1,
+   "track": 3,
+   "tertiary": 1
+  },
+  "componentes": {
+   "veicular": 99
+  },
+  "verificacao": {
+   "veicular": {
+    "ilha": 52,
+    "ponta_quase_conectada": 698,
+    "mao_unica_sem_saida": 123,
+    "cruzamento_sem_no": 1
+   },
+   "ponta_solta_nao_listadas": 28808
+  }
+ },
+ "eventos": [
+  [
+   3.14,
+   "OSM: cache reutilizado (/work/cache_B/osm_overpass_rm04501.json)"
+  ],
+  [
+   4.34,
+   "OSM: 163259 ways encontrados, 1475702 n\u00f3s"
+  ],
+  [
+   11.6,
+   "OSM: descartados busway: 122, construction: 666, corridor: 17, crossing: 1, cycleway: 24, dummy: 1, escape: 1, footway: 8, path: 5, pedestrian: 29, platform: 4, primary_link: 1, proposed: 124, raceway: 28, residential: 6, rest_area: 3, service: 94, services: 34, steps: 2, tertiary: 1, tertiary_link: 1, track: 3, unclassified: 1"
+  ],
+  [
+   14.27,
+   "OSM: 337146 arcos \u2014 veicular: 99 componentes"
+  ],
+  [
+   14.27,
+   "OSM: 337146 arcos no bbox"
+  ],
+  [
+   17.06,
+   "OSM: 265715 arcos dentro do munic\u00edpio (arco inteiro, sem clip)"
+  ],
+  [
+   55.96,
+   "OSM: verifica\u00e7\u00e3o (veicular) \u2014 cruzamento_sem_no: 1, ilha: 52, mao_unica_sem_saida: 123, ponta_quase_conectada: 698"
+  ],
+  [
+   55.96,
+   "OSM: 28808 becos sem saida (ponta_solta) nao listados (use INCLUIR_PONTAS_SOLTAS)"
+  ]
+ ],
+ "json_bytes": 137952502,
+ "n_ways": 163259,
+ "n_nodes_json": 1475702,
+ "n_arcos_todos": 337146,
+ "n_arcos_municipio": 265715,
+ "n_problemas": 874,
+ "t_montar_camadas_s": 37.54,
+ "gravacao": {
+  "osm_links": [
+   0,
+   265715
+  ],
+  "osm_nodes": [
+   0,
+   194838
+  ],
+  "osm_problemas": [
+   0,
+   874
+  ]
+ },
+ "t_gravar_gpkg_s": 5.38,
+ "gpkg_bytes": 97042432,
+ "t_total_script_s": 103.38,
+ "maxrss_mb": 2336
+}

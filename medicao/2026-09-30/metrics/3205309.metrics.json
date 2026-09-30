@@ -1,0 +1,109 @@
+{
+ "path": "A",
+ "rm": "3205309",
+ "bbox": [
+  -40.3623,
+  -20.5279,
+  -28.8476,
+  -20.2292
+ ],
+ "cache_reutilizado": false,
+ "cache_preexistia": false,
+ "t_compute_total_s": 8.43,
+ "t_ate_payload_s": 4.12,
+ "t_topologia_s": 0.67,
+ "t_filtro_s": 0.33,
+ "t_verificacao_s": 3.29,
+ "erro": null,
+ "metadata": {
+  "code_muni": "3205309",
+  "nome_muni": "3205309",
+  "rede": "veicular",
+  "arcos": 48385,
+  "orfaos": 0,
+  "descartados": {
+   "service": 55,
+   "pedestrian": 30,
+   "construction": 12,
+   "unclassified": 1,
+   "footway": 3,
+   "primary": 1,
+   "raceway": 2,
+   "corridor": 15,
+   "cycleway": 13,
+   "residential": 3,
+   "proposed": 31,
+   "secondary_link": 1
+  },
+  "componentes": {
+   "veicular": 32
+  },
+  "verificacao": {
+   "veicular": {
+    "ilha": 14,
+    "ponta_quase_conectada": 192,
+    "mao_unica_sem_saida": 12
+   },
+   "ponta_solta_nao_listadas": 1553
+  }
+ },
+ "eventos": [
+  [
+   0.0,
+   "OSM: consultando Overpass"
+  ],
+  [
+   4.12,
+   "OSM: 25265 ways encontrados, 124721 n\u00f3s"
+  ],
+  [
+   4.58,
+   "OSM: descartados construction: 12, corridor: 15, cycleway: 13, footway: 3, pedestrian: 30, primary: 1, proposed: 31, raceway: 2, residential: 3, secondary_link: 1, service: 55, unclassified: 1"
+  ],
+  [
+   4.79,
+   "OSM: 48385 arcos \u2014 veicular: 32 componentes"
+  ],
+  [
+   4.79,
+   "OSM: 48385 arcos no bbox"
+  ],
+  [
+   5.12,
+   "OSM: 22050 arcos dentro do munic\u00edpio (arco inteiro, sem clip)"
+  ],
+  [
+   8.41,
+   "OSM: verifica\u00e7\u00e3o (veicular) \u2014 ilha: 14, mao_unica_sem_saida: 12, ponta_quase_conectada: 192"
+  ],
+  [
+   8.41,
+   "OSM: 1553 becos sem saida (ponta_solta) nao listados (use INCLUIR_PONTAS_SOLTAS)"
+  ]
+ ],
+ "json_bytes": 15976930,
+ "n_ways": 25265,
+ "n_nodes_json": 124721,
+ "n_arcos_todos": 48385,
+ "n_arcos_municipio": 22050,
+ "n_problemas": 218,
+ "t_montar_camadas_s": 3.05,
+ "gravacao": {
+  "osm_links": [
+   0,
+   22050
+  ],
+  "osm_nodes": [
+   0,
+   17071
+  ],
+  "osm_problemas": [
+   0,
+   218
+  ]
+ },
+ "t_gravar_gpkg_s": 0.51,
+ "gpkg_bytes": 7835648,
+ "t_total_script_s": 13.16,
+ "maxrss_mb": 492
+}

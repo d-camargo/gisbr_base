@@ -1,0 +1,8 @@
+work/
+.venv/
+__pycache__/
+*.pyc
+*.osm.pbf
+*.gpkg
+*.gpkg.zip
+.pytest_cache/

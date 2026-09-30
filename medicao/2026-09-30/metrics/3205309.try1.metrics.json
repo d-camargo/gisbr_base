@@ -1,0 +1,36 @@
+{
+ "path": "A",
+ "rm": "3205309",
+ "bbox": [
+  -40.3623,
+  -20.5279,
+  -28.8476,
+  -20.2292
+ ],
+ "cache_reutilizado": false,
+ "cache_preexistia": false,
+ "t_compute_total_s": 127.85,
+ "t_ate_payload_s": null,
+ "t_topologia_s": null,
+ "t_filtro_s": null,
+ "t_verificacao_s": null,
+ "erro": "Overpass falhou em todos os endpoints: overpass-api.de (Error transferring https://overpass-api.de/api/interpreter - server replied: Gateway Timeout); overpass.kumi.systems (Operation canceled); overpass.private.coffee (Operation canceled)",
+ "metadata": {
+  "code_muni": "3205309",
+  "nome_muni": "3205309",
+  "rede": "veicular",
+  "erro": "Overpass falhou em todos os endpoints: overpass-api.de (Error transferring https://overpass-api.de/api/interpreter - server replied: Gateway Timeout); overpass.kumi.systems (Operation canceled); overpass.private.coffee (Operation canceled)"
+ },
+ "eventos": [
+  [
+   0.0,
+   "OSM: consultando Overpass"
+  ],
+  [
+   127.85,
+   "Erro no Overpass: Overpass falhou em todos os endpoints: overpass-api.de (Error transferring https://overpass-api.de/api/interpreter - server replied: Gateway Timeout); overpass.kumi.systems (Operation canceled); overpass.private.coffee (Operation canceled)"
+  ]
+ ],
+ "t_total_script_s": 128.79,
+ "maxrss_mb": 225
+}

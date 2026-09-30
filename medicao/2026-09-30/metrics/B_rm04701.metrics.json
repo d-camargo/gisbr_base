@@ -1,0 +1,113 @@
+{
+ "path": "B",
+ "rm": "04701",
+ "bbox": [
+  -40.7022,
+  -20.7652,
+  -28.8476,
+  -19.8512
+ ],
+ "cache_reutilizado": true,
+ "cache_preexistia": true,
+ "t_compute_total_s": 17.04,
+ "t_ate_payload_s": 1.46,
+ "t_topologia_s": 2.51,
+ "t_filtro_s": 1.14,
+ "t_verificacao_s": 11.87,
+ "erro": null,
+ "metadata": {
+  "code_muni": "rm04701",
+  "nome_muni": "rm04701",
+  "rede": "veicular",
+  "arcos": 123995,
+  "orfaos": 0,
+  "descartados": {
+   "pedestrian": 51,
+   "service": 67,
+   "construction": 142,
+   "unclassified": 4,
+   "residential": 9,
+   "raceway": 26,
+   "proposed": 84,
+   "footway": 3,
+   "services": 8,
+   "primary": 1,
+   "primary_link": 1,
+   "corridor": 16,
+   "cycleway": 14,
+   "secondary_link": 1,
+   "emergency_bay": 1,
+   "ladder": 1
+  },
+  "componentes": {
+   "veicular": 31
+  },
+  "verificacao": {
+   "veicular": {
+    "ilha": 22,
+    "ponta_quase_conectada": 498,
+    "mao_unica_sem_saida": 105
+   },
+   "ponta_solta_nao_listadas": 9503
+  }
+ },
+ "eventos": [
+  [
+   0.95,
+   "OSM: cache reutilizado (/work/cache_B/osm_overpass_rm04701.json)"
+  ],
+  [
+   1.46,
+   "OSM: 65105 ways encontrados, 591498 n\u00f3s"
+  ],
+  [
+   3.18,
+   "OSM: descartados construction: 142, corridor: 16, cycleway: 14, emergency_bay: 1, footway: 3, ladder: 1, pedestrian: 51, primary: 1, primary_link: 1, proposed: 84, raceway: 26, residential: 9, secondary_link: 1, service: 67, services: 8, unclassified: 4"
+  ],
+  [
+   3.97,
+   "OSM: 123995 arcos \u2014 veicular: 31 componentes"
+  ],
+  [
+   3.97,
+   "OSM: 123995 arcos no bbox"
+  ],
+  [
+   5.11,
+   "OSM: 113644 arcos dentro do munic\u00edpio (arco inteiro, sem clip)"
+  ],
+  [
+   16.98,
+   "OSM: verifica\u00e7\u00e3o (veicular) \u2014 ilha: 22, mao_unica_sem_saida: 105, ponta_quase_conectada: 498"
+  ],
+  [
+   16.98,
+   "OSM: 9503 becos sem saida (ponta_solta) nao listados (use INCLUIR_PONTAS_SOLTAS)"
+  ]
+ ],
+ "json_bytes": 56439479,
+ "n_ways": 65105,
+ "n_nodes_json": 591498,
+ "n_arcos_todos": 123995,
+ "n_arcos_municipio": 113644,
+ "n_problemas": 625,
+ "t_montar_camadas_s": 11.7,
+ "gravacao": {
+  "osm_links": [
+   0,
+   113644
+  ],
+  "osm_nodes": [
+   0,
+   83547
+  ],
+  "osm_problemas": [
+   0,
+   625
+  ]
+ },
+ "t_gravar_gpkg_s": 2.05,
+ "gpkg_bytes": 41062400,
+ "t_total_script_s": 32.73,
+ "maxrss_mb": 1068
+}
