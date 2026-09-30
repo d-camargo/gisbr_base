@@ -28,3 +28,9 @@
 - 435.304 ways, 2.809.071 nós no JSON, 872.182 arcos no bbox, 710.876 no polígono, 524.730 nós, 3.747 problemas (cruzamento_sem_no 7, ilha 142, mão única sem saída 376, ponta quase conectada 3.222).
 - GPKG 253.648.896 B, zip -9 104.825.145 B.
 - Pendente: conferir a borda no QGIS com o plugin em modo RM (D4), feito à mão.
+
+### Passo 10 (parte local) — lote completo (2026-09-30, extratos `*-260929`, todos com timestamp OSM 2026-09-29T20:22:51Z)
+- `build.py --pular-existentes`: ~51 min de parede (17:27–18:18), 82 RMs. Recortes: norte 10 bboxes 39,5 s; nordeste 33 bboxes 261,5 s / 2.221 MB; centro-oeste 3 bboxes 32,7 s; sudeste 13 bboxes 229,5 s / 3.199 MB; sul 23 bboxes 166,2 s / 3.476 MB.
+- **84 de 84 RMs `ok`** depois da correção abaixo. Zips somam 1.087,9 MB (estimativa do M6: 1,4–3,4 GB); o maior é SP, 104,8 MB. Soma do tempo dos subprocessos das 81 RMs do 1º lote: 1.566 s.
+- **Correção 1 — malha IBGE inválida:** 3 RMs falharam (01501 Cariri, 04402 Área de Expansão Metropolitana/BA, 03001 Recife) porque um município de cada (2301901, 2926301, 2607208) vem com polígono inválido, o `unaryUnion` devolvia nulo e o bbox saía infinito. `malhas.py` agora aplica `makeValid()` em cada município e aborta se a união sair vazia. Refeitas: Cariri 44.718 arcos / 624 MB, Área de Expansão 18.578 / 734 MB, Recife 166.849 / 1.294 MB.
+- **Correção 2 — `maxrss_mb` errado:** `ru_maxrss` herda o pico do processo pai no fork/exec, e o `build.py` segura ~3,5 GB depois do recorte. As RMs cujo pico real ficou abaixo do pai registraram o pico do pai. `processa_rm.py` agora lê `VmHWM` de `/proc/self/status`, que zera no exec. No manifest deste lote, os 78 valores contaminados viraram `null`; só 04701, 04901, 00201, 01501, 04402 e 03001 têm pico medido.

@@ -6,7 +6,6 @@ com osm_{links,nodes,problemas}_<chave> + work/out/<chave>.metrics.json.
 Aborta (rc != 0) se o pipeline nao reutilizou o cache (= teria consultado o Overpass)."""
 import json
 import re
-import resource
 import sys
 import time
 
@@ -14,6 +13,14 @@ from .config import WORK_DIR, garante_gisbr
 from .malhas import chave_de
 
 OUT = WORK_DIR / "out"
+
+
+def pico_rss_mb():
+    """Pico de RSS DESTE processo. VmHWM zera no exec; ru_maxrss herda o pico do pai
+    (o build.py, que segura ~3,5 GB depois do recorte) e mentia para as RMs pequenas."""
+    for l in open("/proc/self/status"):
+        if l.startswith("VmHWM:"):
+            return int(l.split()[1]) // 1024
 
 
 def main(id_):
@@ -100,7 +107,7 @@ def main(id_):
                      "verificacao": dif(t_filtro, t_verif), "montar_camadas": round(t_camadas, 2),
                      "gravar_gpkg": round(t_gpkg, 2), "total_script": round(time.perf_counter() - T0, 2)},
         "gpkg_bytes": gpkg.stat().st_size,
-        "maxrss_mb": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024,
+        "maxrss_mb": pico_rss_mb(),
     }
     (OUT / f"{chave}.metrics.json").write_text(json.dumps(metrics, indent=1))
     print("DONE", json.dumps(metrics), flush=True)

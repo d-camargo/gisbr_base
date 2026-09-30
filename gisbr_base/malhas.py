@@ -53,8 +53,11 @@ def prepara(ids):
         for c in codes:
             b = baixa_municipio(c).read_bytes()
             d = (gzip.decompress(b) if b[:2] == b"\x1f\x8b" else b).decode()
-            geoms += [f.geometry() for f in QgsJsonUtils.stringToFeatureList(d, QgsFields())]
+            # malha do IBGE pode vir invalida (auto-intersecao) e zerar a uniao inteira: corrige antes
+            geoms += [f.geometry().makeValid() for f in QgsJsonUtils.stringToFeatureList(d, QgsFields())]
         u = QgsGeometry.unaryUnion(geoms)
+        if u.isNull() or u.isEmpty():
+            raise RuntimeError(f"malha {k}: uniao vazia ({len(geoms)} feicoes)")
         bb = u.boundingBox()
         bboxes[k] = [bb.xMinimum(), bb.yMinimum(), bb.xMaximum(), bb.yMaximum()]
         (MALHAS / f"{k}.geojson").write_text(json.dumps(
