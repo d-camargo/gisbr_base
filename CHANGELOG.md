@@ -21,3 +21,10 @@
 - Overpass passou na 1ª tentativa (6,8 s em `compute_osm_network`). Geofabrik = extrato `sudeste-260929`, Overpass = OSM ao vivo em 2026-09-30.
 - Ways 25.261 (Geofabrik) × 25.266 (Overpass), −0,02%. Arcos no bbox 48.375 × 48.387, −0,02%. Arcos no polígono 22.040 × 22.050, −0,05%. Problemas 218 × 218, distribuição idêntica (ilha 14, mão única sem saída 12, ponta quase conectada 192).
 - Critério (< 2% em ways, arcos e problemas): **aprovado**. A diferença é a data do OSM, como no M1.
+
+### Passo 9 — portão de memória, RM São Paulo 04901 (2026-09-30, extrato `sudeste-260929`, MemoryMax=12G)
+- **Passou.** Pico de RAM do subprocesso 4.874 MB (estimativa do M3 era 6–7,5 GB). `build.py` inteiro: 5 min 20 s de parede, pico 4.992 MB (maior filho).
+- Recorte (1 bbox, pyosmium) 142,3 s / 981 MB; conversão 22,2 s; subprocesso 126,8 s: `compute_osm_network` 62,7 s (topologia 9,0, filtro 3,8, verificação 45,9), `montar_camadas` 51,4 s, gravação 9,6 s.
+- 435.304 ways, 2.809.071 nós no JSON, 872.182 arcos no bbox, 710.876 no polígono, 524.730 nós, 3.747 problemas (cruzamento_sem_no 7, ilha 142, mão única sem saída 376, ponta quase conectada 3.222).
+- GPKG 253.648.896 B, zip -9 104.825.145 B.
+- Pendente: conferir a borda no QGIS com o plugin em modo RM (D4), feito à mão.
